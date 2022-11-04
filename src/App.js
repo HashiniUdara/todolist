@@ -1,25 +1,125 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+import Button from '@mui/material/Button';
+
+// table
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
+import AddIcon from '@mui/icons-material/Add';
+
+import { OutlinedInput } from '@mui/material';
+
+//components
+import Header from "./components/Header";
+import ToDoRows from "./components/ToDoRows";
+
+
+export default class App extends Component{
+  constructor (props){
+    super(props);
+
+    this.state={
+       userName:"Hashini",//can dynamically change this data
+       todoitems:[
+        {action:"prepare breakfast",done:false},
+        {action:"have a wash",done:false},
+        {action:"take breakfast",done:false},
+        {action:"get ready for the work",done:false},
+        {action:"departure",done:false},
+       ],
+       newtodo:'',
+    };
+  }
+
+  toggleDone = (todo) => 
+    this.setState({
+      todoitems:this.state.todoitems.map((item)=>
+        item.action === todo.action ? {...item, done: !item.done} : item
+      ),
+    });
+
+  // todoRows =()=>
+  //   this.state.todoitems.map((item)=>(
+  //     <TableRow key={item.action}>
+  //       <TableCell>{item.action}</TableCell>
+  //       <TableCell align="center">
+  //         <Checkbox
+  //           checked={item.done}
+  //           onChange={() => this.toggleDone(item)}
+  //           inputProps={{ 'aria-label': 'controlled' }}
+  //         />
+  //       </TableCell>
+  //     </TableRow>
+  //   ));
+
+  todoRows =()=>
+    this.state.todoitems.map((item)=>(
+      <ToDoRows key={item.action} item={item} callback={this.toggleDone}/>
+    ));
+
+  changeStateData= () => {
+    this.setState({
+      userName:this.state.userName === "Hashini" ? "Sanju" : "Hashini",
+    })
+  };
+
+  updateValue = (event) => {
+    this.setState({newtodo:event.target.value});
+  };
+
+  addNewTodo = () => {
+    this.setState({
+      todoitems:[
+        ...this.state.todoitems,
+        {action:this.state.newtodo, done:false}
+      ],
+    });
+  };
+
+  render = () => (
+    <div className="container">
+      <div className="row">
+        <div className="col-l2">
+          <Header name={this.state.userName}/>
+          <div align="center">
+            <Button onClick={this.changeStateData} variant="contained">change user</Button>
+          </div>
+
+          <div align="center" hei>
+            {/* <input type="text" name="newtodo" width={'500px'}></input> */}
+            <OutlinedInput type="text" name="newtodo" value={this.state.newtodo} sx={{width:"75.5%"}} onChange={this.updateValue}/>
+            <Button onClick={this.addNewTodo} variant="contained" size="large"><AddIcon/></Button>
+          </div>
+
+          <TableContainer >
+            <Table aria-label="simple table" sx={{width:"80%"}} align="center">
+              <TableHead bgcolor="#64b5f6">
+                <TableRow>
+                  <TableCell>task</TableCell>
+                  <TableCell align="center">complete</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {/* {this.state.todoitems.map((item)=>(
+                  <TableRow>
+                    <TableCell>{item.action}</TableCell>
+                    <TableCell>{item.done}</TableCell>
+                  </TableRow>
+                ))} */}
+                {this.todoRows()}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
+
+      </div>
+
     </div>
   );
 }
-
-export default App;
