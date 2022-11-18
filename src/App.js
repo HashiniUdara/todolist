@@ -18,6 +18,8 @@ import { OutlinedInput } from '@mui/material';
 //components
 import Header from "./components/Header";
 import ToDoRows from "./components/ToDoRows";
+import Popup from "./components/Popup";
+import PopupDialog from "./components/PopupDialog";
 
 
 export default class App extends Component{
@@ -34,6 +36,7 @@ export default class App extends Component{
         {action:"departure",done:false},
        ],
        newtodo:'',
+       openpopup:false,
     };
   }
 
@@ -82,6 +85,18 @@ export default class App extends Component{
     });
   };
 
+  displayPopup = () => {
+    this.setState({
+      openpopup:true
+    });
+  }
+
+  handleClick = () => {
+    this.setState({
+      openpopup:false
+    });
+  }
+
   render = () => (
     <div className="container">
       <div className="row">
@@ -90,13 +105,17 @@ export default class App extends Component{
           <div align="center">
             <Button onClick={this.changeStateData} variant="contained">change user</Button>
           </div>
-
+          <br/>
+          <div align="center">
+            <Button onClick={this.displayPopup} variant="contained">POP UP</Button>
+          </div>
+          <br/>
           <div align="center" hei>
             {/* <input type="text" name="newtodo" width={'500px'}></input> */}
             <OutlinedInput type="text" name="newtodo" value={this.state.newtodo} sx={{width:"75.5%"}} onChange={this.updateValue}/>
             <Button onClick={this.addNewTodo} variant="contained" size="large"><AddIcon/></Button>
           </div>
-
+          <br/>
           <TableContainer >
             <Table aria-label="simple table" sx={{width:"80%"}} align="center">
               <TableHead bgcolor="#64b5f6">
@@ -116,6 +135,11 @@ export default class App extends Component{
               </TableBody>
             </Table>
           </TableContainer>
+          <PopupDialog
+            openpopup = {this.state.openpopup}
+            onClick={this.handleClick}
+          >
+          </PopupDialog>
         </div>
 
       </div>
