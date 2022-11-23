@@ -20,6 +20,7 @@ import Header from "./components/Header";
 import ToDoRows from "./components/ToDoRows";
 import Popup from "./components/Popup";
 import PopupDialog from "./components/PopupDialog";
+import TestModal from "./components/TestModal";
 
 
 export default class App extends Component{
@@ -37,6 +38,7 @@ export default class App extends Component{
        ],
        newtodo:'',
        openpopup:false,
+       openmodal:false,
     };
   }
 
@@ -72,7 +74,7 @@ export default class App extends Component{
     })
   };
 
-  updateValue = (event) => {
+  updateValue  = (event) => {
     this.setState({newtodo:event.target.value});
   };
 
@@ -90,10 +92,20 @@ export default class App extends Component{
       openpopup:true
     });
   }
-
   handleClick = () => {
     this.setState({
       openpopup:false
+    });
+  }
+
+  displayModal = () => {
+    this.setState({
+      openmodal:true
+    });
+  }
+  closeModal = () => {
+    this.setState({
+      openmodal:false
     });
   }
 
@@ -108,6 +120,10 @@ export default class App extends Component{
           <br/>
           <div align="center">
             <Button onClick={this.displayPopup} variant="contained">POP UP</Button>
+          </div>
+          <br/>
+          <div align="center">
+            <Button onClick={this.displayModal} variant="contained">MODAL</Button>
           </div>
           <br/>
           <div align="center" hei>
@@ -140,6 +156,7 @@ export default class App extends Component{
             onClick={this.handleClick}
           >
           </PopupDialog>
+          <TestModal openmodal = {this.state.openmodal} closeModal = {this.closeModal}></TestModal>
         </div>
 
       </div>
