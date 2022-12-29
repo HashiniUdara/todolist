@@ -9,6 +9,8 @@ import { Provider } from 'react-redux';
 import ReduxPractice from './ReduxPractice';
 import { fetchUsers } from './features/users/usersSlice';
 
+import Login from './features/login/Login';
+
 store.dispatch(fetchUsers())
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,7 +18,8 @@ root.render(
   <React.StrictMode>
     <Provider store={store} >
       {/* <App /> */}
-      <ReduxPractice/>
+      {/* <ReduxPractice/> */}
+      <Login/>
     </Provider>
   </React.StrictMode>
 );
