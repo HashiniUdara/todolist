@@ -11,6 +11,13 @@ import { fetchUsers } from './features/users/usersSlice';
 
 import Login from './features/login/Login';
 
+// E-commerce
+import Main from './E-commerce/Main';
+import Category from './E-commerce/Category';
+import Item from './E-commerce/Item';
+import InsertUser from './E-commerce/InsertUser';
+import InsertItem from './E-commerce/InsertItem';
+
 store.dispatch(fetchUsers())
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,7 +26,12 @@ root.render(
     <Provider store={store} >
       {/* <App /> */}
       {/* <ReduxPractice/> */}
-      <Login/>
+      {/* <Login/> */}
+      {/* <Main/> */}
+      {/* <Category/> */}
+      {/* <Item/> */}
+      {/* <InsertUser/> */}
+      <InsertItem/>
     </Provider>
   </React.StrictMode>
 );
